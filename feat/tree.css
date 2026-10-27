@@ -1,0 +1,77 @@
+/* Academic family tree, scoped to .ft-tree */
+.ft-tree .ft-filters{display:flex;flex-wrap:wrap;gap:0;margin:30px 0 8px;border-top:1px solid var(--rule);border-bottom:1px solid var(--rule)}
+.ft-tree .ft-filters button{font:600 12px/1 var(--caps);letter-spacing:.14em;text-transform:uppercase;background:none;border:0;color:var(--muted);padding:14px 18px;cursor:pointer;position:relative}
+.ft-tree .ft-filters button::after{content:"";position:absolute;left:18px;right:18px;bottom:-1px;height:2px;background:var(--gold);transform:scaleX(0);transition:transform .35s}
+.ft-tree .ft-filters button[aria-pressed="true"]{color:var(--purple)}
+.ft-tree .ft-filters button[aria-pressed="true"]::after{transform:none}
+.ft-tree button:focus-visible,.ft-tree .ft-leaf:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+.ft-tree .ft-plate{display:grid;grid-template-columns:minmax(0,1fr) 270px;gap:32px;align-items:start;margin-top:10px}
+.ft-tree .ft-stage{min-height:200px}
+.ft-tree .ft-svg{display:block;width:100%;height:auto;overflow:visible}
+.ft-tree .ft-guide{fill:none;stroke:var(--rule);stroke-width:.7;stroke-dasharray:1 4}
+.ft-tree .ft-tick{stroke:var(--gold-deep);stroke-width:.6;opacity:.55}
+.ft-tree .ft-link{fill:none;stroke:var(--gold-deep);stroke-width:.8;opacity:.75;transition:opacity .45s,stroke-width .3s}
+.ft-tree .ft-trunk{stroke:var(--purple);stroke-width:1.3}
+.ft-tree .ft-co{stroke-dasharray:.012 .01}
+.ft-tree .ft-node{fill:var(--paper);stroke:var(--purple);stroke-width:1.2}
+.ft-tree text{font-family:var(--caps);fill:var(--ink)}
+.ft-tree .ft-lv{font-size:15px;font-weight:700;letter-spacing:.2em;text-anchor:middle;fill:var(--purple);paint-order:stroke;stroke:var(--paper);stroke-width:5px}
+.ft-tree .ft-st{font:italic 500 14px var(--serif);text-anchor:middle;fill:var(--muted);paint-order:stroke;stroke:var(--paper);stroke-width:4px}
+.ft-tree .ft-root{font-size:13.5px;letter-spacing:.18em;text-transform:uppercase;text-anchor:middle;fill:var(--purple);font-weight:600}
+.ft-tree .ft-seal-ring{fill:none;stroke:#fff1bf;stroke-width:.8;stroke-dasharray:2 2}
+.ft-tree .ft-seal-t{font-size:13.5px;font-weight:700;letter-spacing:.16em;text-anchor:middle;fill:#3a2a08}
+.ft-tree .ft-leaf{cursor:pointer;transition:opacity .45s}
+.ft-tree .ft-blade{fill:none;stroke:var(--gold-deep);stroke-width:1;transition:fill .25s,transform .3s}
+.ft-tree .ft-vein{stroke:var(--gold-deep);stroke-width:.5}
+.ft-tree .is-g .ft-blade{fill:var(--gold)}
+.ft-tree .is-co .ft-blade{stroke-dasharray:2 1.5}
+.ft-tree .ft-name{font-size:15px;letter-spacing:.06em;transition:fill .25s}
+.ft-tree .ft-leaf.on .ft-name,.ft-tree .ft-leaf:hover .ft-name{fill:var(--purple);font-weight:700}
+.ft-tree .ft-leaf.on .ft-blade{fill:var(--purple);stroke:var(--purple)}
+.ft-tree .ft-lk.on{opacity:1;stroke:var(--purple);stroke-width:1.6}
+.ft-tree .off{opacity:.1;pointer-events:none}
+/* grow-in on first draw */
+.ft-tree.is-ready .ft-link{stroke-dashoffset:0;animation:ft-grow 1.4s calc(var(--k)*28ms) both cubic-bezier(.3,.6,.2,1)}
+.ft-tree.is-ready .ft-link:not(.ft-co){stroke-dasharray:1 1}
+@keyframes ft-grow{from{stroke-dashoffset:1}}
+.ft-tree.is-ready svg .ft-leaf{animation:ft-fade .7s .9s both}
+@keyframes ft-fade{from{opacity:0}}
+/* detail card */
+.ft-tree .ft-card{border-top:2px solid var(--gold);border-bottom:1px solid var(--rule);padding:16px 0 18px;position:sticky;top:96px;min-height:180px}
+.ft-tree .ft-card-k{font:600 12px var(--caps);letter-spacing:.16em;text-transform:uppercase;color:var(--gold-deep)}
+.ft-tree .ft-card h3{font:600 24px/1.15 var(--serif);margin:10px 0 8px;color:var(--ink)}
+.ft-tree .ft-card-t{font:italic 500 17px/1.4 var(--serif);color:var(--muted);margin:0 0 14px}
+.ft-tree .ft-card-empty{color:var(--muted);font-size:14px;margin:10px 0 0}
+.ft-tree .ft-card dl{display:grid;grid-template-columns:auto 1fr;gap:4px 14px;margin:0;font-size:14px}
+.ft-tree .ft-card dt{font:600 12px/1.9 var(--caps);letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.ft-tree .ft-card dd{margin:0}
+.ft-tree .ft-cap{font:italic 500 15px var(--serif);color:var(--muted);border-top:1px solid var(--rule);padding-top:10px;margin-top:22px;max-width:80ch}
+/* phone list hidden on desktop */
+.ft-tree .ft-list,.ft-tree .ft-list-root{display:none}
+@media (max-width:760px){
+ .ft-tree .ft-plate{grid-template-columns:minmax(0,1fr)}
+ .ft-tree .ft-svg{display:none}
+ .ft-tree .ft-filters button{padding:12px 10px;font-size:12px;letter-spacing:.1em}
+ .ft-tree .ft-filters button::after{left:10px;right:10px}
+ .ft-tree .ft-list-root{display:block;font:700 13px var(--caps);letter-spacing:.18em;text-transform:uppercase;color:var(--purple);padding-left:26px;position:relative}
+ .ft-tree .ft-list-root::before{content:"";position:absolute;left:0;top:-2px;width:18px;height:18px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff1bf,#c9a227 55%,#8c6b1f)}
+ .ft-tree .ft-list,.ft-tree .ft-list ul{display:block;list-style:none;margin:0;padding:0 0 0 18px;border-left:1px solid var(--gold-deep)}
+ .ft-tree .ft-list{margin:6px 0 0 9px}
+ .ft-tree .ft-list li{position:relative;padding:6px 0 0 4px}
+ .ft-tree .ft-list li::before{content:"";position:absolute;left:-18px;top:16px;width:16px;border-top:1px solid var(--gold-deep)}
+ .ft-tree .ft-list li.is-co::before{border-top-style:dashed}
+ .ft-tree .ft-list .ft-lv{font:700 13px var(--caps);letter-spacing:.18em;color:var(--purple);stroke:none}
+ .ft-tree .ft-list .ft-st{font:italic 500 15px var(--serif);color:var(--muted)}
+ .ft-tree .ft-list .ft-leaf{display:flex;gap:8px;align-items:center;font-size:14px;line-height:1.3;padding:5px 4px;min-height:32px}
+ .ft-tree .ft-list .ft-leaf svg{flex:0 0 20px;width:20px;height:12px;overflow:visible}
+ .ft-tree .ft-list .ft-leaf.on span{color:var(--purple);font-weight:600}
+ .ft-tree .ft-list .ft-leaf.off{display:none}
+ .ft-tree .ft-card{position:static;min-height:0;padding:12px 0}
+ .ft-tree .ft-card.has-d{position:sticky;bottom:0;background:var(--paper);box-shadow:0 -12px 24px -18px rgba(46,20,70,.35)}
+}
+@media (prefers-reduced-motion:reduce){
+ .ft-tree *,.ft-tree.is-ready .ft-link,.ft-tree.is-ready svg .ft-leaf{animation:none!important;transition:none!important}
+}
+.ft-tree.is-grown .ft-link,.ft-tree.is-grown svg .ft-leaf{animation:none}
+.ft-tree svg .ft-leaf:focus-visible{outline:none}
+.ft-tree svg .ft-leaf:focus-visible .ft-name{text-decoration:underline;text-decoration-color:var(--gold)}

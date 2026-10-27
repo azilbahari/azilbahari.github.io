@@ -1,12 +1,16 @@
-// Menu, reveal-on-scroll, counters, lightbox, publication filter, map
+// Menu, reveal-on-scroll, counters, lightbox, publication filter, service worker
 (function(){
+  document.documentElement.classList.add('js');
   var m=document.querySelector('.menu'),n=document.querySelector('.nav');
   if(m)m.addEventListener('click',function(){var o=n.classList.toggle('open');m.setAttribute('aria-expanded',o)});
 
   var io=new IntersectionObserver(function(es){es.forEach(function(e){if(!e.isIntersecting)return;
     e.target.classList.add('in');io.unobserve(e.target);
     e.target.querySelectorAll('[data-count]').forEach(count)})},{threshold:.15});
-  document.querySelectorAll('.rv,.bars,.stats').forEach(function(el){io.observe(el)});
+  var all=document.querySelectorAll('.rv,.bars,.stats,.sh');all.forEach(function(el){io.observe(el)});
+  // safety: never leave content hidden (print, fast scroll, bots)
+  setTimeout(function(){all.forEach(function(el){if(!el.classList.contains('in')&&el.getBoundingClientRect().top<innerHeight){el.classList.add('in');io.unobserve(el)}})},1500);
+  addEventListener('beforeprint',function(){all.forEach(function(el){el.classList.add('in')})});
 
   function count(el){
     var end=parseFloat(el.dataset.count),dec=(el.dataset.count.split('.')[1]||'').length,t0=null,pre='',suf='';
@@ -42,36 +46,15 @@
         if(k&&k!=='Q1/Q2'&&p.q!==k)return false;
         return !s||(p.t+' '+p.a+' '+p.s).toLowerCase().indexOf(s)>-1});
       ct.textContent=r.length+' of '+PUBS.length+' outputs';
-      list.innerHTML=r.map(function(p){
+      var last=null;list.innerHTML=r.map(function(p){var hy=p.y!==last;last=p.y;
         var src=[p.s,p.v&&('vol. '+p.v),p.i&&('('+p.i+')'),p.p&&('pp. '+p.p)].filter(Boolean).join(', ');
-        return '<li class="pub"><div class="py">'+p.y+'</div><div><p class="pt">'+(p.d?'<a href="https://doi.org/'+esc(p.d)+'" target="_blank" rel="noopener">'+esc(p.t)+'</a>':esc(p.t))+'</p>'+
+        return '<li class="pub'+(hy?' yr1':'')+'"><div class="py">'+(hy?p.y:'')+'</div><div><p class="pt">'+'<a href="'+(p.d?'https://doi.org/'+esc(p.d):'https://scholar.google.com/scholar?q=%22'+encodeURIComponent(p.t)+'%22')+'" target="_blank" rel="noopener"'+(p.d?'':' title="Search Google Scholar"')+'>'+esc(p.t)+'</a>'+'</p>'+
           '<p class="pa">'+esc(p.a).replace(me,'<span class="me">$1</span>')+'</p><p class="ps">'+esc(src)+'</p></div>'+
           '<div class="pm"><span class="q '+(p.q?p.q.toLowerCase():'qx')+'">'+(p.q||'–')+'</span><span class="ty">'+esc(p.g)+'</span>'+(p.c?'<span class="cites">'+p.c+(p.c>1?' citations':' citation')+'</span>':'')+'</div></li>'}).join('')||'<li class="count">No outputs match. Try a shorter search.</li>';
     }
     [q,ty,yr,qt].forEach(function(e){e.addEventListener('input',draw)});draw();
   }
 
-  // collaboration map
-  var map=document.getElementById('map');
-  if(map&&window.d3&&window.topojson){
-    fetch('https://cdn.jsdelivr.net/npm/world-atlas@2.0.2/countries-110m.json').then(function(r){return r.json()}).then(function(w){
-      var W=960,H=480,svg=d3.select(map).attr('viewBox','0 0 '+W+' '+H);
-      var proj=d3.geoNaturalEarth1().center([72,8]).scale(250).translate([W/2,H/2]),path=d3.geoPath(proj);
-      var on=new Set(MAP.on);
-      var defs=svg.append('defs'),g=defs.append('linearGradient').attr('id','arcg');
-      g.append('stop').attr('offset','0').attr('stop-color','#fff3c4');g.append('stop').attr('offset','1').attr('stop-color','#c9a227');
-      svg.append('g').selectAll('path').data(topojson.feature(w,w.objects.countries).features).join('path')
-        .attr('class',function(d){return'land'+(on.has(d.properties.name)?' on':'')}).attr('d',path);
-      var home=proj(MAP.home.c);
-      MAP.pts.forEach(function(p,i){
-        var b=proj(p.c),mx=(home[0]+b[0])/2,my=Math.min(home[1],b[1])-Math.hypot(b[0]-home[0],b[1]-home[1])*.28;
-        var a=svg.append('path').attr('class','arc').attr('d','M'+home+'Q'+mx+','+my+' '+b);
-        var L=a.node().getTotalLength();a.attr('stroke-dasharray',L).attr('stroke-dashoffset',L).transition().delay(300+i*180).duration(1400).attr('stroke-dashoffset',0);
-        svg.append('circle').attr('class','pin').attr('cx',b[0]).attr('cy',b[1]).attr('r',4.5);
-        svg.append('text').attr('class','lbl').attr('x',b[0]+(p.dx||7)).attr('y',b[1]+(p.dy||4)).attr('text-anchor',p.dx<0?'end':'start').text(p.n);
-      });
-      svg.append('circle').attr('class','home').attr('cx',home[0]).attr('cy',home[1]).attr('r',7);
-      svg.append('text').attr('class','lbl').attr('x',home[0]+10).attr('y',home[1]+18).text('UiTM Shah Alam');
-    }).catch(function(){map.parentNode.style.display='none'});
-  }
+  // offline support (sw.js cache name carries the build stamp)
+  if('serviceWorker' in navigator)addEventListener('load',function(){navigator.serviceWorker.register('sw.js').catch(function(){})});
 })();

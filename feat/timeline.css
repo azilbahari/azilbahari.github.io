@@ -1,0 +1,58 @@
+/* Career timeline, about.html. Scoped under .tlx; site tokens only. */
+.tlx{padding:clamp(72px,9vw,128px) 0;background:var(--paper);border-top:1px solid var(--rule);border-bottom:1px solid var(--rule)}
+.tlx-grid{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:clamp(32px,5vw,80px);align-items:start}
+.tlx-side{position:sticky;top:96px}
+.tlx-side h2{margin:.2em 0 0;font:500 clamp(30px,3.2vw,44px)/1.05 var(--serif);color:var(--ink)}
+.tlx-num{font:600 clamp(120px,15vw,228px)/.82 var(--serif);letter-spacing:-.03em;color:transparent;-webkit-text-stroke:1.5px var(--gold);margin:28px 0 18px -.04em;font-variant-numeric:lining-nums tabular-nums;user-select:none}
+.tlx-num span{display:inline-block;transition:transform .45s cubic-bezier(.2,.7,.2,1),opacity .45s}
+.tlx-num span.tlx-flip{transform:translateY(-.08em);opacity:.35}
+.tlx-rib{margin:0;max-width:360px}
+.tlx-rib svg{display:block;width:100%;height:auto;overflow:visible}
+.tlx-bars rect{fill:var(--rule);transition:fill .35s}
+.tlx-bars rect.on{fill:var(--gold)}
+.tlx-bars rect.now{fill:var(--purple)}
+.tlx-ticks text{font:600 6.5px var(--caps);fill:var(--muted);text-anchor:middle;letter-spacing:.06em}
+.tlx-rib figcaption{margin-top:8px;font:600 11px/1.4 var(--caps);letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+
+.tlx-list{list-style:none;margin:0;padding:0 0 0 clamp(28px,4vw,56px);position:relative;--p:0}
+.tlx-list::before,.tlx-list::after{content:"";position:absolute;left:0;top:8px;bottom:8px;width:1px;background:var(--rule)}
+.tlx-list::after{background:var(--gold);width:2px;left:-.5px;bottom:auto;height:calc((100% - 16px) * var(--p))}
+.tlx-y{position:relative;padding:0 0 clamp(56px,7vw,104px);max-width:520px}
+.tlx-y.tlx-r{margin-left:clamp(0px,6vw,96px)}
+.tlx-y::before{content:"";position:absolute;left:calc(-1 * clamp(28px,4vw,56px));top:7px;width:14px;height:1px;background:var(--gold)}
+.tlx-r::before{width:calc(14px + clamp(0px,6vw,96px));left:calc(-1 * clamp(28px,4vw,56px) - clamp(0px,6vw,96px))}
+.tlx-yl{font:600 15px/1 var(--caps);letter-spacing:.2em;color:var(--gold-deep);margin-bottom:14px}
+.tlx-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+.tlx-y ul{list-style:none;margin:0;padding:0}
+.tlx-m{padding:0 0 22px}
+.tlx-m+.tlx-m{border-top:1px solid var(--rule);padding-top:20px}
+.tlx-k{display:block;font:600 11px/1 var(--caps);letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
+.tlx-award .tlx-k,.tlx-grant .tlx-k{color:var(--gold-deep)}
+.tlx-career .tlx-k,.tlx-degree .tlx-k{color:var(--purple)}
+.tlx-m h3{margin:8px 0 4px;font:500 clamp(22px,2.1vw,28px)/1.15 var(--serif);color:var(--ink)}
+.tlx-m p{margin:0;color:var(--muted);font:400 15px/1.55 var(--sans)}
+.tlx-tally{margin:2px 0 0;font:500 12.5px/1.4 var(--sans);color:var(--muted);font-variant-numeric:tabular-nums}
+.tlx-fig{margin:28px 0 0;max-width:320px}
+.tlx-r .tlx-fig{margin-left:auto}
+.tlx-fig img{display:block;width:100%;height:auto;aspect-ratio:4/5;object-fit:cover;object-position:50% 30%;filter:saturate(.9)}
+.tlx-fig figcaption{margin-top:8px;font:italic 400 15px/1.4 var(--serif);color:var(--muted)}
+
+/* entrance: only when JS runs and motion is allowed */
+.tlx.js .tlx-y{opacity:.18;transform:translateY(18px);transition:opacity .6s,transform .6s cubic-bezier(.2,.7,.2,1)}
+.tlx.js .tlx-y.in{opacity:1;transform:none}
+.tlx.js .tlx-y.cur .tlx-yl{color:var(--purple)}
+
+@media (max-width:820px){
+  .tlx-grid{grid-template-columns:1fr;gap:12px}
+  .tlx-side{display:contents}
+  .tlx-side>.kicker,.tlx-side>h2{grid-column:1}
+  .tlx-num{position:sticky;top:0;z-index:2;font-size:76px;margin:12px -16px 0;padding:8px 16px 8px;background:var(--paper);border-bottom:1px solid var(--rule)}
+  .tlx-rib{max-width:none;margin:4px 0 24px}
+  .tlx-y.tlx-r{margin-left:0}
+  .tlx-r::before{width:14px;left:calc(-1 * clamp(28px,4vw,56px))}
+  .tlx-r .tlx-fig{margin-left:0}
+}
+@media (prefers-reduced-motion:reduce){
+  .tlx.js .tlx-y{opacity:1;transform:none;transition:none}
+  .tlx-num span,.tlx-bars rect{transition:none}
+}

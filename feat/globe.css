@@ -1,0 +1,27 @@
+.gl{margin:0 auto;max-width:640px}
+.gl-stage{position:relative;width:min(560px,100%);aspect-ratio:1;margin:0 auto;touch-action:pan-y;cursor:grab;user-select:none}
+.gl-stage:active{cursor:grabbing}
+.gl-cv{width:100%;height:100%;display:block}
+.gl-pins{position:absolute;inset:0;pointer-events:none}
+.gl-pin{position:absolute;width:0;height:0;font:600 11px/1 var(--sans);letter-spacing:.02em;color:#f6ead0;white-space:nowrap;transition:opacity .25s}
+.gl-pin b{position:absolute;left:8px;top:-6px;font-weight:600;padding:1px 4px;border-radius:3px;background:rgba(20,6,28,.72)}
+.gl-pin.lead b{border-left:1px solid var(--gold)}
+.gl-pin i{position:absolute;left:-3.5px;top:-3.5px;width:7px;height:7px;border-radius:50%;background:var(--gold);box-shadow:0 0 0 2px rgba(20,6,28,.6)}
+.gl-pin.sel i{background:#fff}
+.gl-pin.sel i::after{content:"";position:absolute;inset:-4px;border:2px solid var(--gold-lite);border-radius:50%;animation:gl-pulse 1.6s ease-out infinite}
+.gl-pin.sel b{background:var(--gold);color:#1b0826}
+@keyframes gl-pulse{to{transform:scale(2.6);opacity:0}}
+@media (prefers-reduced-motion:reduce){.gl-pin.sel i::after{animation:none}}
+.gl-pin.home i{background:var(--foil,#fff)}
+.gl-pin.off{opacity:0}
+.gl-chips{display:flex;flex-wrap:wrap;gap:6px 8px;justify-content:center;margin:18px 0 0}
+.gl-chips button{font:500 13px/1 var(--sans);padding:7px 12px;border:1px solid var(--rule);background:transparent;color:var(--ink);border-radius:999px;cursor:pointer}
+.gl-chips button:hover{border-color:var(--gold-deep)}
+.gl-chips button[aria-pressed=true]{background:var(--gold);color:#1b0826;border-color:var(--gold-deep);font-weight:600}
+.gl-chips button:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.gl-cap{max-width:560px;margin:14px auto 0;min-height:7.5em;font-size:15px;color:var(--muted);text-align:left;border-left:2px solid var(--gold);padding-left:14px}
+.gl-cap .kicker{display:block;margin-bottom:4px}
+@media (max-width:420px){.gl-stage{width:340px;max-width:100%}.gl-pin{font-size:10px}
+.gl-chips{flex-wrap:nowrap;overflow-x:auto;justify-content:flex-start;padding:2px 2px 8px;scrollbar-width:thin;-webkit-overflow-scrolling:touch}.gl-chips button{flex:none}}
+.gl-cn{display:block;font:600 13px/1.2 var(--caps);letter-spacing:.12em;text-transform:uppercase;color:var(--gold-deep);margin-bottom:5px}
+.gl-fb{list-style:none;padding:0;margin:0 auto;max-width:560px;font-size:14px;color:var(--muted)}.gl-fb li{padding:8px 0;border-bottom:1px solid var(--rule)}.gl-fb b{font:600 12px var(--caps);letter-spacing:.1em;color:var(--ink);margin-right:6px}
