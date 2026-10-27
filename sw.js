@@ -1,5 +1,5 @@
 // Service worker: network-first for HTML (fresh pages, cached copy offline), cache-first for static assets.
-var V = 'azil-20261027185846';
+var V = 'azil-20261027190512';
 var CORE = ['offline.html'];
 self.addEventListener('install', function (e) {
   e.waitUntil(caches.open(V).then(function (c) { return c.addAll(CORE); }).then(function () { return self.skipWaiting(); }));
