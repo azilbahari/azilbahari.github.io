@@ -222,6 +222,6 @@
     if (!phone) ann(qmax.y, tq.j + tq.c + tq.o, [qmax.y + ': ' + qmax.q1 + ' Q1 papers,', 'his strongest year'], phone ? -10 : -24, -28, y1);
 
     root.querySelector('.nw-ccap').textContent = 'All ' + D.totals.pubs + ' curated outputs, ' + S[0].y + '–' + S[S.length - 1].y +
-      '. Lower panel: citations to the papers published in each year. Citations per paper: higher of Google Scholar and Scopus counts, 25 September 2026. Recent papers have had less time to be cited.';
+      '. Lower panel: citations to the papers published in each year. Citations per paper: higher of Google Scholar and Scopus counts, 5 November 2026. Recent papers have had less time to be cited.';
   }
 })();
