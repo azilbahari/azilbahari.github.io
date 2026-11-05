@@ -5,7 +5,7 @@
 .gl-crumbs a{color:inherit}
 .gl-print{font:600 14px/1 var(--sans);padding:12px 20px;border-radius:999px;border:0;background:var(--velvet);color:#fff;cursor:pointer}
 .gl-print:hover{background:var(--purple)}
-.gl-print:focus-visible,.pk-copy:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+.gl-print:focus-visible,.pk-copy:focus-visible{outline:2px solid var(--focus,var(--gold));outline-offset:3px}
 .gl-sheet{max-width:980px;margin:0 auto;background:var(--paper);color:var(--ink);padding:56px 64px 36px;box-shadow:var(--shadow);border-top:6px solid var(--velvet);position:relative}
 .gl-sheet::before{content:"";position:absolute;inset:10px;border:1px solid var(--rule);pointer-events:none}
 .gl-mast{display:grid;grid-template-columns:1fr auto;gap:28px;align-items:end;border-bottom:3px double var(--ink);padding-bottom:18px}

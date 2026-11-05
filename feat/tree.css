@@ -4,7 +4,7 @@
 .ft-tree .ft-filters button::after{content:"";position:absolute;left:18px;right:18px;bottom:-1px;height:2px;background:var(--gold);transform:scaleX(0);transition:transform .35s}
 .ft-tree .ft-filters button[aria-pressed="true"]{color:var(--purple)}
 .ft-tree .ft-filters button[aria-pressed="true"]::after{transform:none}
-.ft-tree button:focus-visible,.ft-tree .ft-leaf:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+.ft-tree button:focus-visible,.ft-tree .ft-leaf:focus-visible{outline:2px solid var(--focus,var(--gold));outline-offset:3px}
 .ft-tree .ft-plate{display:grid;grid-template-columns:minmax(0,1fr) 270px;gap:32px;align-items:start;margin-top:10px}
 .ft-tree .ft-stage{min-height:200px}
 .ft-tree .ft-svg{display:block;width:100%;height:auto;overflow:visible}

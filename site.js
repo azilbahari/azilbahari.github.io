@@ -2,7 +2,8 @@
 (function(){
   document.documentElement.classList.add('js');
   var m=document.querySelector('.menu'),n=document.querySelector('.nav');
-  if(m)m.addEventListener('click',function(){var o=n.classList.toggle('open');m.setAttribute('aria-expanded',o)});
+  if(m){m.addEventListener('click',function(){var o=n.classList.toggle('open');m.setAttribute('aria-expanded',o)});
+    document.addEventListener('keydown',function(e){if(e.key==='Escape'&&n.classList.contains('open')){n.classList.remove('open');m.setAttribute('aria-expanded','false');m.focus()}})}
 
   var io=new IntersectionObserver(function(es){es.forEach(function(e){if(!e.isIntersecting)return;
     e.target.classList.add('in');io.unobserve(e.target);
@@ -20,15 +21,23 @@
     requestAnimationFrame(step);
   }
 
-  var lb=document.createElement('div');lb.className='lightbox';lb.innerHTML='<button type="button">Close</button><div><img alt=""><p></p></div>';
+  var lb=document.createElement('div');lb.className='lightbox';lb.setAttribute('role','dialog');lb.setAttribute('aria-modal','true');lb.setAttribute('aria-label','Enlarged photo');
+  lb.innerHTML='<button type="button">Close</button><div><img alt=""><p></p></div>';
   document.body.appendChild(lb);
-  function close(){lb.classList.remove('open')}
+  var lbBtn=lb.querySelector('button'),opener=null;
+  function close(){if(!lb.classList.contains('open'))return;lb.classList.remove('open');if(opener)opener.focus();opener=null}
   lb.addEventListener('click',function(e){if(e.target.tagName!=='IMG')close()});
+  // keep focus inside the open lightbox (Close is its only control)
+  lb.addEventListener('keydown',function(e){if(e.key==='Tab'){e.preventDefault();lbBtn.focus()}});
   document.addEventListener('keydown',function(e){if(e.key==='Escape')close()});
   document.querySelectorAll('figure.ph').forEach(function(f){
+    var im=f.querySelector('img');if(!im)return;
+    var alt=im.alt,cap=f.querySelector('figcaption');
     f.tabIndex=0;
-    function open(){var i=f.querySelector('img'),c=f.querySelector('figcaption');lb.querySelector('img').src=i.src;lb.querySelector('img').alt=i.alt;lb.querySelector('p').textContent=c?c.textContent:'';lb.classList.add('open')}
-    f.addEventListener('click',open);f.addEventListener('keydown',function(e){if(e.key==='Enter')open()});
+    // a figure that holds no link of its own acts as one "enlarge" button (its contents are read via the label)
+    if(!f.querySelector('a,button')){f.setAttribute('role','button');f.setAttribute('aria-label','Enlarge photo: '+(alt||(cap?cap.textContent.trim():'')));if(cap&&alt===cap.textContent.trim())im.alt=''}
+    function open(){var c=cap;lb.querySelector('img').src=im.currentSrc||im.src;lb.querySelector('img').alt=alt;lb.querySelector('p').textContent=c?c.textContent:'';opener=f;lb.classList.add('open');lbBtn.focus()}
+    f.addEventListener('click',open);f.addEventListener('keydown',function(e){if(e.target===f&&(e.key==='Enter'||e.key===' ')){e.preventDefault();open()}});
   });
 
   // publications

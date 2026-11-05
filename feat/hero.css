@@ -7,7 +7,7 @@
 .wv-legend .wv-from{opacity:.75}
 .wv-legend .wv-arrow{font-family:var(--serif);letter-spacing:0;opacity:.75}
 .wv-legend span[aria-hidden]{opacity:.5}
-.wv-legend button{all:unset;cursor:pointer;padding:6px 2px 5px;color:inherit;opacity:.55;border-bottom:1px solid transparent;transition:opacity .3s,border-color .3s}
+.wv-legend button{all:unset;cursor:pointer;padding:8px 2px 7px;color:inherit;opacity:.72;border-bottom:1px solid transparent;transition:opacity .3s,border-color .3s}
 .wv-legend button:hover{opacity:.9}
 .wv-legend button[aria-pressed="true"]{opacity:1;border-bottom-color:var(--gold)}
 .wv-legend button:focus-visible{outline:1px solid var(--gold-lite);outline-offset:4px;opacity:1}

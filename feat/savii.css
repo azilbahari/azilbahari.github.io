@@ -36,7 +36,7 @@
 .sv-tabs{display:flex;border-bottom:1px solid rgba(201,162,39,.45);margin-bottom:16px}
 .sv-tabs button{flex:1;background:none;border:0;color:inherit;font-family:var(--caps);letter-spacing:.1em;font-size:12px;padding:10px 4px;cursor:pointer;opacity:.6;border-bottom:2px solid transparent;margin-bottom:-1px}
 .sv-tabs button[aria-selected="true"]{opacity:1;border-color:var(--gold);color:var(--gold)}
-.sv button:focus-visible,.sv input:focus-visible,.sv summary:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.sv button:focus-visible,.sv input:focus-visible,.sv summary:focus-visible{outline:2px solid var(--focus,var(--gold));outline-offset:2px}
 .sv-src{margin:0 0 12px}.sv-src b{color:var(--gold);font-weight:600}
 .sv-ctl label[for]{display:flex;justify-content:space-between;align-items:baseline;font-size:13px}
 .sv-ctl output{font-family:var(--serif);font-size:22px;color:var(--gold)}
